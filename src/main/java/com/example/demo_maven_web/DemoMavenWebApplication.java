@@ -1,3 +1,7 @@
+/*
+https://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/reference/htmlsingle/#getting-started-introducing-spring-boot
+ */
+
 package com.example.demo_maven_web;
 
 import jakarta.servlet.ServletException;

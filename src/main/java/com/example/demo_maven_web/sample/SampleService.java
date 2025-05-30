@@ -8,6 +8,6 @@ public class SampleService {
 
 
     public String getName() {
-        return "hyungoo";
+        return "HYUN GOO KAKAKAK";
     }
 }

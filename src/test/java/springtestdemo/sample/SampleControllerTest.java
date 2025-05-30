@@ -5,6 +5,8 @@ import com.example.demo_maven_web.DemoMavenWebApplication;
 import com.example.demo_maven_web.sample.SampleController;
 import com.example.demo_maven_web.sample.SampleService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,6 +14,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.boot.test.system.OutputCaptureRule;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -33,7 +38,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @WebMvcTest(SampleController.class)
 @ContextConfiguration(classes= DemoMavenWebApplication.class)
 @AutoConfigureMockMvc
+@ExtendWith(OutputCaptureExtension.class)
 public class SampleControllerTest {
+
+    //@RegisterExtension
+    //static final OutputCaptureExtension outputCapture = new OutputCaptureExtension();
 
     @Autowired
     MockMvc mockMvc;
@@ -48,7 +57,7 @@ public class SampleControllerTest {
     SampleService mockSampleService;
 
     @Test
-    public void hello() throws Exception {
+    public void hello(CapturedOutput capturedOutput) throws Exception {
 
         when(mockSampleService.getName()).thenReturn("hyungoo");
 
@@ -58,7 +67,9 @@ public class SampleControllerTest {
                 //.andDo(print());
         ;
 
-
+        assertThat(capturedOutput.toString())
+                .contains("KANG")
+                .contains("HYUN");
 
 
 
